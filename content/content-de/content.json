@@ -1,0 +1,22 @@
+{
+  "greeting": "Hallo",
+  "name": "Umut Akturk",
+  "title": "Frontend Engineer & Produktentwickler",
+  "subtitle": "Ich konzipiere und liefere schnelle, zuverlässige Web-Erlebnisse mit React und TypeScript.",
+  "location": "Remote / EU-freundlich",
+  "availability": "Offen für neue Rollen",
+  "highlights": [
+    "React + TypeScript + Vite",
+    "Polierter UX mit integrierter Barrierefreiheit",
+    "Schnelle Lieferung mit durchdachter Iteration"
+  ],
+  "badges": [
+    "Frontend",
+    "Full-stack",
+    "Produktorientiert",
+    "Mentoring",
+    "KI",
+    "DevOps",
+    "Cloud"
+  ]
+}

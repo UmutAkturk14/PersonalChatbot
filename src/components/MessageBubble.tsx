@@ -1,7 +1,9 @@
 import type { ChatMessage } from "../types/chat";
+import type { LanguageCode } from "../types/language";
 
 type MessageBubbleProps = {
   message: ChatMessage;
+  language: LanguageCode;
 };
 
 function escapeHtml(value: string) {
@@ -42,9 +44,10 @@ function parseBlocks(text: string): Block[] {
     });
 }
 
-function MessageBubble({ message }: MessageBubbleProps) {
+function MessageBubble({ message, language }: MessageBubbleProps) {
   const isUser = message.role === "user";
   const blocks = parseBlocks(message.content);
+  const labels = language === "de" ? { user: "Du", assistant: "Assistent" } : { user: "You", assistant: "Assistant" };
 
   return (
     <article
@@ -59,7 +62,7 @@ function MessageBubble({ message }: MessageBubbleProps) {
           isUser ? "text-slate-900/80" : "text-teal-200"
         }`}
       >
-        {isUser ? "You" : "Assistant"}
+        {isUser ? labels.user : labels.assistant}
       </p>
       <div className="mt-2 space-y-3">
         {blocks.map((block, index) => {

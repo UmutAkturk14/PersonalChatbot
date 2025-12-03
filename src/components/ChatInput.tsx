@@ -1,12 +1,28 @@
 import { type FormEvent, type KeyboardEvent, useState } from "react";
+import type { LanguageCode } from "../types/language";
 
 type ChatInputProps = {
   isLoading: boolean;
   onSubmit: (text: string) => Promise<void>;
+  language: LanguageCode;
 };
 
-function ChatInput({ isLoading, onSubmit }: ChatInputProps) {
+function ChatInput({ isLoading, onSubmit, language }: ChatInputProps) {
   const [value, setValue] = useState("");
+  const labels =
+    language === "de"
+      ? {
+          prompt: "Frag mich etwas",
+          placeholder: "Zum Beispiel: Was sollte ich als Teamkollege über dich wissen?",
+          sending: "Denke nach...",
+          send: "Senden",
+        }
+      : {
+          prompt: "Ask anything",
+          placeholder: "Try: What should I know about you as a teammate?",
+          sending: "Thinking...",
+          send: "Send",
+        };
 
   const submitMessage = async () => {
     const trimmed = value.trim();
@@ -34,14 +50,14 @@ function ChatInput({ isLoading, onSubmit }: ChatInputProps) {
     >
       <label className="flex flex-col gap-2">
         <span className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-300">
-          Ask anything
+          {labels.prompt}
         </span>
         <div className="flex items-start gap-3">
           <textarea
             value={value}
             onChange={(event) => setValue(event.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Try: What should I know about you as a teammate?"
+            placeholder={labels.placeholder}
             className="min-h-[80px] flex-1 resize-none rounded-xl border border-white/10 bg-slate-950/60 px-4 py-3 text-sm text-slate-50 outline-none transition focus:border-teal-300/70 focus:ring-2 focus:ring-teal-400/40"
           />
           <button
@@ -49,7 +65,7 @@ function ChatInput({ isLoading, onSubmit }: ChatInputProps) {
             disabled={isLoading}
             className="rounded-xl bg-gradient-to-r from-teal-400 to-emerald-400 px-4 py-3 text-sm font-semibold text-slate-950 shadow-[0_10px_30px_-12px_rgba(45,212,191,0.65)] transition hover:translate-y-[1px] hover:shadow-[0_18px_34px_-18px_rgba(45,212,191,0.75)] disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {isLoading ? "Thinking..." : "Send"}
+            {isLoading ? labels.sending : labels.send}
           </button>
         </div>
       </label>
