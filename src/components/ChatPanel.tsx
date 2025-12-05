@@ -27,7 +27,7 @@ function ChatPanel({
         : `Hi! I'm ${personaName}'s chatbot. Ask me about my experience as a ${personaTitle}${
             personaSubtitle ? ` — ${personaSubtitle}` : ""
           }.`,
-    [personaName, personaTitle, personaSubtitle, language],
+    [personaName, personaTitle, personaSubtitle, language]
   );
 
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -46,7 +46,7 @@ function ChatPanel({
 
   const sortedMessages = useMemo(
     () => [...messages].sort((a, b) => a.createdAt - b.createdAt),
-    [messages],
+    [messages]
   );
 
   const handleSubmit = async (text: string) => {
@@ -64,7 +64,10 @@ function ChatPanel({
     setIsLoading(true);
 
     try {
-      const reply = await draftAssistantReply([...messages, userMessage], language);
+      const reply = await draftAssistantReply(
+        [...messages, userMessage],
+        language
+      );
       const assistantMessage: ChatMessage = {
         id: createMessageId("assistant"),
         role: "assistant",
@@ -104,7 +107,7 @@ function ChatPanel({
         };
 
   return (
-    <section className="overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900/90 via-slate-900 to-slate-950 shadow-[0_30px_80px_-24px_rgba(15,181,199,0.35)] backdrop-blur-lg">
+    <section className="flex min-h-[70svh] flex-col overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900/90 via-slate-900 to-slate-950 shadow-[0_30px_80px_-24px_rgba(15,181,199,0.35)] backdrop-blur-lg">
       <div className="flex items-center justify-between border-b border-white/5 px-6 py-5">
         <div>
           <p className="text-[11px] uppercase tracking-[0.18em] text-teal-200">
@@ -118,14 +121,22 @@ function ChatPanel({
         </div>
       </div>
 
-      <div className="flex flex-col gap-6 p-6">
-        <div className="flex max-h-[460px] flex-col gap-3 overflow-y-auto pr-1">
+      <div className="flex flex-1 flex-col gap-6 p-6">
+        <div className="flex-1 space-y-3 overflow-y-auto pr-1">
           {sortedMessages.map((message) => (
-            <MessageBubble key={message.id} message={message} language={language} />
+            <MessageBubble
+              key={message.id}
+              message={message}
+              language={language}
+            />
           ))}
         </div>
 
-        <ChatInput isLoading={isLoading} onSubmit={handleSubmit} language={language} />
+        <ChatInput
+          isLoading={isLoading}
+          onSubmit={handleSubmit}
+          language={language}
+        />
       </div>
     </section>
   );
