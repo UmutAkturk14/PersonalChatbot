@@ -1,0 +1,100 @@
+{
+  "name": "Umut Akturk",
+  "location": "Berlin, Germany",
+  "contact": {
+    "email": "umut.akturk14@gmail.com",
+    "phone": "+49 162 359 34 83",
+    "links": {
+      "linkedin": "https://www.linkedin.com/in/umut-akturk/",
+      "github": "https://github.com/UmutAkturk14/",
+      "portfolio": "https://umutakturk14.github.io/portfolio/"
+    }
+  },
+  "summary": "Full-stack developer with background in linguistics, experienced in frontend, backend, cloud, and DevOps. AWS Certified Cloud Practitioner.",
+  "skills": {
+    "frontend": [
+      "JavaScript",
+      "TypeScript",
+      "React",
+      "Tailwind",
+      "HTML5",
+      "CSS3"
+    ],
+    "backend": [
+      "Go",
+      "Ruby",
+      "Ruby on Rails",
+      "Node.js",
+      "REST APIs",
+      "JWT Authentication"
+    ],
+    "cloud_devops": ["AWS", "Docker", "Git", "CI/CD"],
+    "databases_testing": ["PostgreSQL", "Playwright", "Vitest", "Postman"],
+    "collaboration_tools": ["JIRA", "Confluence", "Agile", "Code Review"],
+    "languages": {
+      "Turkish": "Native",
+      "English": "Advanced",
+      "French": "Advanced",
+      "Spanish": "Intermediate",
+      "German": "Novice"
+    }
+  },
+  "experience": [
+    {
+      "role": "Software Developer",
+      "company": "Insider",
+      "period": "Jan 2024 – Sep 2024",
+      "location": "Istanbul, Turkey (Remote)",
+      "highlights": [
+        "Integrated new partners into the platform",
+        "Acted as technical liaison in partner calls",
+        "Debugged REST API and frontend integration issues",
+        "Built responsive marketing campaigns from Figma designs",
+        "Worked in Dockerized environments with PHP/Laravel backend"
+      ]
+    },
+    {
+      "role": "Editor",
+      "company": "Phaemus B.V.",
+      "period": "Apr 2019 – Dec 2022",
+      "location": "Amsterdam (Remote)",
+      "highlights": [
+        "Led a remote team of 15–20 writers",
+        "Improved workflows and communication"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Galatasaray University",
+      "program": "Comparative Linguistics & Applied Languages",
+      "period": "2014–2020"
+    },
+    {
+      "institution": "Université Bordeaux Montaigne",
+      "program": "Lettres Modernes",
+      "period": "2018–2019"
+    },
+    {
+      "institution": "Le Wagon",
+      "program": "Web Development Bootcamp",
+      "period": "2023"
+    }
+  ],
+  "certifications": [
+    "AWS Certified Cloud Practitioner (2025)",
+    "AWS Essentials & Technical Essentials (2025)",
+    "AWS Cloud Foundations (2025)",
+    "Legacy JavaScript Algorithms and Data Structures — freeCodeCamp (2025)",
+    "Le Wagon Web Development Bootcamp (2023)",
+    "IBM Introduction to Data Analytics (2020)"
+  ],
+  "volunteer": [
+    {
+      "organization": "Translators Without Borders",
+      "role": "Translator",
+      "domains": ["IT", "Healthcare", "Pharmaceutical", "Education"],
+      "languages": ["English", "French", "Turkish", "Spanish"]
+    }
+  ]
+}
