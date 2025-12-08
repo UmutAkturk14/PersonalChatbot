@@ -13,31 +13,89 @@
   "summary": "Full-stack developer with background in linguistics, experienced in frontend, backend, cloud, and DevOps. AWS Certified Cloud Practitioner.",
   "skills": {
     "frontend": [
-      "JavaScript",
-      "TypeScript",
-      "React",
-      "Tailwind",
-      "HTML5",
-      "CSS3"
+      { "name": "JavaScript", "level": "Advanced" },
+      { "name": "TypeScript", "level": "Intermediate" },
+      {
+        "name": "React",
+        "level": "Intermediate"
+      },
+      {
+        "name": "Tailwind",
+        "level": "Intermediate"
+      },
+      {
+        "name": "HTML5",
+        "level": "Advanced"
+      },
+      {
+        "name": "CSS3",
+        "level": "Advanced"
+      }
     ],
     "backend": [
-      "Go",
-      "Ruby",
-      "Ruby on Rails",
-      "Node.js",
-      "REST APIs",
-      "JWT Authentication"
+      { "name": "Go", "level": "Novice" },
+      { "name": "Ruby", "level": "Intermediate" },
+      { "name": "Ruby on Rails", "level": "Intermediate" }
     ],
-    "cloud_devops": ["AWS", "Docker", "Git", "CI/CD"],
-    "databases_testing": ["PostgreSQL", "Playwright", "Vitest", "Postman"],
-    "collaboration_tools": ["JIRA", "Confluence", "Agile", "Code Review"],
-    "languages": {
-      "Turkish": "Native",
-      "English": "Advanced",
-      "French": "Advanced",
-      "Spanish": "Intermediate",
-      "German": "Novice"
-    }
+    "cloud_devops": [
+      {
+        "name": "AWS",
+        "level": "Beginner",
+        "certifications": ["Cloud Practitioner"]
+      },
+      {
+        "name": "Docker",
+        "level": "Beginner"
+      },
+      {
+        "name": "Git",
+        "level": "Intermediate"
+      }
+    ],
+    "databases": [
+      {
+        "name": "PostgreSQL",
+        "level": "Beginner"
+      }
+    ],
+    "testing": [
+      {
+        "name": "Playwright",
+        "level": "Beginner"
+      },
+      {
+        "name": "Vitest",
+        "level": "Beginner"
+      },
+      {
+        "name": "Postman",
+        "level": "Intermediate"
+      }
+    ],
+    "collaboration_tools": [
+      {
+        "name": "JIRA",
+        "level": "Advanced"
+      },
+      {
+        "name": "Confluence",
+        "level": "Advanced"
+      },
+      {
+        "name": "Agile"
+      },
+      {
+        "name": "Code Review",
+        "level": "Intermediate"
+      }
+    ],
+    "languages": [
+      { "name": "Turkish", "proficiency": "Native" },
+      { "name": "English", "proficiency": "Advanced" },
+      { "name": "French", "proficiency": "Advanced" },
+      { "name": "Spanish", "proficiency": "Intermediate" },
+      { "name": "German", "proficiency": "Novice" }
+    ]
   },
   "experience": [
     {
@@ -46,11 +104,11 @@
       "period": "Jan 2024 – Sep 2024",
       "location": "Istanbul, Turkey (Remote)",
       "highlights": [
-        "Integrated new partners into the platform",
-        "Acted as technical liaison in partner calls",
-        "Debugged REST API and frontend integration issues",
-        "Built responsive marketing campaigns from Figma designs",
-        "Worked in Dockerized environments with PHP/Laravel backend"
+        "Led the technical integration of high-risk new partners, ensuring secure onboarding and accelerating their go-live timeline.",
+        "Represented engineering as the technical liaison in partner calls, clarifying requirements and removing integration blockers.",
+        "Diagnosed and resolved REST API and frontend integration issues, improving system reliability and reducing support overhead.",
+        "Converted Figma marketing designs into responsive, production-ready interfaces, delivering high-quality campaigns under tight deadlines.",
+        "Developed and debugged features within Dockerized PHP/Laravel environments, strengthening deployment consistency and reducing environment-related issues."
       ]
     },
     {
@@ -93,8 +151,50 @@
     {
       "organization": "Translators Without Borders",
       "role": "Translator",
-      "domains": ["IT", "Healthcare", "Pharmaceutical", "Education"],
+      "domains": [
+        "IT",
+        "Healthcare",
+        "Pharmaceutical",
+        "Education",
+        "Inclusivity"
+      ],
       "languages": ["English", "French", "Turkish", "Spanish"]
     }
-  ]
+  ],
+  "preferences": {
+    "target_roles": ["Junior Developer", "Intern", "Ausbildung"],
+    "engagement": {
+      "employment_types": [
+        "Full-time",
+        "Part-time",
+        "Internship",
+        "Ausbildung"
+      ],
+      "availability": "Available immediately",
+      "notice_period": "No notice period"
+    },
+    "location_preference": "On-site, hybrid, remote; anything across Germany",
+    "relocation": {
+      "open": true,
+      "preferred_regions": ["Germany"],
+      "notes": "Based in Berlin, open for relocation anywhere in Germany"
+    },
+    "work_authorization": {
+      "citizenship": "Turkish",
+      "requires_sponsorship": false,
+      "notes": "No requirement of sponsorship inside Germany."
+    },
+    "compensation_expectations": {
+      "salary_range_eur": "€35000-€45000/Year gross",
+      "currency": "EUR",
+      "flexibility": "Adjustable based on scope, level, and benefits (ok with lower salary for especially Ausbildung"
+    },
+    "work_style": [
+      "Product-minded and curious",
+      "User-centered thinking",
+      "Enjoys close collaboration with design and product teams",
+      "Proactive learner who takes responsibility for tasks",
+      "Values clear communication and teamwork"
+    ]
+  }
 }

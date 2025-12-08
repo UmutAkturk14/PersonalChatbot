@@ -18,5 +18,13 @@
     "AI",
     "DevOps",
     "Cloud"
-  ]
+  ],
+  "recruiter_notes": {
+    "target_roles": ["Senior Frontend Engineer", "Full-stack Engineer", "Product Engineer"],
+    "contract_day_rate_eur": "€XXX–€YYY per day (placeholder)",
+    "salary_range_eur": "€XXk–€YYk base (placeholder)",
+    "location_preference": "Remote-first across EU/UK; hybrid in Berlin welcome",
+    "relocation": "Open to employer-supported relocation within the EU (placeholder)",
+    "start_availability": "Available from <update-date>"
+  }
 }
