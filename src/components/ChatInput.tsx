@@ -22,12 +22,13 @@ function ChatInput({ isLoading, onSubmit, language }: ChatInputProps) {
   const [isListening, setIsListening] = useState(false);
   const lastTranscriptRef = useRef("");
   const recognitionHandleRef = useRef<SpeechRecognitionHandle | null>(null);
-  const silenceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const silenceTimerRef = useRef<number | null>(null);
   const labels =
     language === "de"
       ? {
           prompt: "Frag mich etwas",
-          placeholder: "Zum Beispiel: Was sollte ich als Teamkollege über dich wissen?",
+          placeholder:
+            "Zum Beispiel: Was sollte ich als Teamkollege über dich wissen?",
           sending: "Denke nach...",
           send: "Senden",
           speak: "Sprich",
@@ -68,7 +69,7 @@ function ChatInput({ isLoading, onSubmit, language }: ChatInputProps) {
 
   const clearSilenceTimer = () => {
     if (silenceTimerRef.current) {
-      clearTimeout(silenceTimerRef.current);
+      window.clearTimeout(silenceTimerRef.current);
       silenceTimerRef.current = null;
     }
   };
@@ -171,12 +172,12 @@ function ChatInput({ isLoading, onSubmit, language }: ChatInputProps) {
             placeholder={labels.placeholder}
             className="min-h-[96px] w-full flex-1 resize-none rounded-xl border border-white/10 bg-slate-950/60 px-4 py-3 text-sm text-slate-50 outline-none transition focus:border-teal-300/70 focus:ring-2 focus:ring-teal-400/40"
           />
-          <div className="flex w-full shrink-0 flex-row gap-2 sm:w-auto">
+          <div className="flex w-full shrink-0 flex-col gap-2 sm:w-auto">
             <button
               type="button"
               onClick={handleToggleSpeech}
               disabled={isLoading}
-              className={`flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 px-4 py-3 text-sm font-semibold shadow-inner shadow-black/30 transition hover:translate-y-[1px] hover:border-teal-300/50 sm:w-auto ${
+              className={`flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 px-4 py-2 text-sm font-semibold shadow-inner shadow-black/30 transition hover:translate-y-[1px] hover:border-teal-300/50 sm:w-auto ${
                 isListening
                   ? "bg-teal-500/20 text-teal-100"
                   : "bg-slate-900/70 text-slate-50"
