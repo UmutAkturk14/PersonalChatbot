@@ -20,3 +20,62 @@ body {
 code {
   font-family: "Fira Code", "SFMono-Regular", Consolas, Menlo, monospace;
 }
+
+.loading-overlay {
+  background: radial-gradient(circle at 30% 20%, rgba(45, 212, 191, 0.08), transparent 40%),
+    radial-gradient(circle at 80% 0%, rgba(99, 102, 241, 0.08), transparent 45%),
+    radial-gradient(circle at 55% 80%, rgba(59, 130, 246, 0.08), transparent 45%),
+    #0b1224;
+  transition: opacity 320ms ease;
+}
+
+.loading-rings {
+  position: relative;
+  width: min(38vw, 160px);
+  height: min(38vw, 160px);
+}
+
+.loading-rings span {
+  position: absolute;
+  inset: 0;
+  border: 2px solid rgba(255, 255, 255, 0.16);
+  border-radius: 9999px;
+  box-shadow: 0 0 50px rgba(45, 212, 191, 0.12);
+  animation: ringPulse 1.8s ease-in-out infinite;
+}
+
+.loading-rings span:nth-child(2) {
+  inset: 10%;
+  border-color: rgba(45, 212, 191, 0.3);
+  animation-delay: 0.2s;
+}
+
+.loading-rings span:nth-child(3) {
+  inset: 20%;
+  border-color: rgba(99, 102, 241, 0.35);
+  animation-delay: 0.4s;
+}
+
+.loading-text .label {
+  letter-spacing: 0.2em;
+}
+
+.loading-overlay[data-reduced-motion="true"] .loading-rings span {
+  animation: none;
+  opacity: 0.5;
+}
+
+@keyframes ringPulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0.35;
+  }
+}

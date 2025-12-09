@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import ChatPanel from "./components/ChatPanel";
 import type { LanguageCode } from "./types/language";
 import { isSupportedLanguage } from "./types/language";
@@ -68,6 +68,10 @@ function App() {
     if (typeof window === "undefined") return false;
     return !isSupportedLanguage(localStorage.getItem("preferredLanguage"));
   });
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [showLoader, setShowLoader] = useState(true);
+  const [renderLoader, setRenderLoader] = useState(true);
+  const loaderStartRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -101,6 +105,44 @@ function App() {
       isMounted = false;
     };
   }, [language]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const updatePreference = () => setPrefersReducedMotion(mediaQuery.matches);
+    updatePreference();
+    mediaQuery.addEventListener("change", updatePreference);
+    return () => mediaQuery.removeEventListener("change", updatePreference);
+  }, []);
+
+  useEffect(() => {
+    // Show loader immediately on load start; keep it visible for a minimum to avoid flicker.
+    if (isLoadingContent) {
+      loaderStartRef.current = performance.now();
+      setShowLoader(true);
+      setRenderLoader(true);
+      return;
+    }
+
+    const minDurationMs = prefersReducedMotion ? 200 : 700;
+    const elapsed = loaderStartRef.current
+      ? performance.now() - loaderStartRef.current
+      : minDurationMs;
+    const remaining = Math.max(0, minDurationMs - elapsed);
+
+    const timer = window.setTimeout(() => setShowLoader(false), remaining);
+    return () => window.clearTimeout(timer);
+  }, [isLoadingContent, prefersReducedMotion, loaderStartRef]);
+
+  useEffect(() => {
+    if (showLoader) {
+      setRenderLoader(true);
+      return;
+    }
+    const fadeOutMs = prefersReducedMotion ? 120 : 360;
+    const timer = window.setTimeout(() => setRenderLoader(false), fadeOutMs);
+    return () => window.clearTimeout(timer);
+  }, [showLoader, prefersReducedMotion]);
 
   const handleLanguageSelect = (nextLanguage: LanguageCode) => {
     setLanguage(nextLanguage);
@@ -140,10 +182,27 @@ function App() {
   );
 
   return (
-    <main
-      className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-50"
-      lang={language}
-    >
+    <main className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-50" lang={language}>
+      {renderLoader && (
+        <div
+          className={`loading-overlay fixed inset-0 z-50 flex flex-col items-center justify-center gap-6 bg-slate-950 transition-opacity ${
+            showLoader ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
+          data-reduced-motion={prefersReducedMotion ? "true" : "false"}
+          role="status"
+          aria-live="polite"
+          aria-busy="true"
+        >
+          <div className="loading-rings" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </div>
+          <div className="loading-text text-center">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-200">Loading</p>
+          </div>
+        </div>
+      )}
       {isLanguagePromptOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 px-6 backdrop-blur">
           <div className="w-full max-w-md rounded-3xl border border-white/10 bg-slate-900/90 p-6 text-center shadow-2xl shadow-teal-500/20">

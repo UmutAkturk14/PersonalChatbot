@@ -1,30 +1,35 @@
 {
   "greeting": "Hey there",
   "name": "Umut Akturk",
-  "title": "Frontend Engineer & Product Builder",
-  "subtitle": "I design and ship fast, reliable web experiences with React and TypeScript.",
-  "location": "Remote / EU-friendly",
-  "availability": "Open to new roles",
+  "title": "Junior Developer",
+  "subtitle": "I design and build reliable, user-focused web applications with modern frontend and backend tooling.",
+  "location": "Berlin, Germany (open accross Germany)",
+  "availability": "Available immediately",
   "highlights": [
     "React + TypeScript + Vite",
-    "Polished UX with accessibility baked in",
-    "Rapid delivery with thoughtful iteration"
+    "Clean, responsive UI with accessibility in mind",
+    "Go, PostgreSQL, Docker, and AWS foundations",
+    "Fast learning curve with strong product intuition"
   ],
   "badges": [
     "Frontend",
     "Full-stack",
     "Product-minded",
-    "Mentorship",
-    "AI",
-    "DevOps",
-    "Cloud"
+    "Rapid Iteration",
+    "Agile",
+    "API Integration"
   ],
   "recruiter_notes": {
-    "target_roles": ["Senior Frontend Engineer", "Full-stack Engineer", "Product Engineer"],
-    "contract_day_rate_eur": "€XXX–€YYY per day (placeholder)",
-    "salary_range_eur": "€XXk–€YYk base (placeholder)",
-    "location_preference": "Remote-first across EU/UK; hybrid in Berlin welcome",
-    "relocation": "Open to employer-supported relocation within the EU (placeholder)",
-    "start_availability": "Available from <update-date>"
+    "target_roles": [
+      "Junior Developer",
+      "Frontend Developer",
+      "Full-stack Developer",
+      "Intern",
+      "Ausbildung"
+    ],
+    "salary_range_eur": "Flexible depending on role and level",
+    "location_preference": "On-site, hybrid, or remote across Germany",
+    "relocation": "Open to relocation anywhere in Germany; no sponsorship required within Germany",
+    "start_availability": "Available immediately"
   }
 }
