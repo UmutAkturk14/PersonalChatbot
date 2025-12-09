@@ -32,6 +32,7 @@ function ChatPanel({
 
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [pendingMessage, setPendingMessage] = useState<ChatMessage | null>(null);
 
   useEffect(() => {
     setMessages([
@@ -62,6 +63,12 @@ function ChatPanel({
 
     setMessages((prev) => [...prev, userMessage]);
     setIsLoading(true);
+    setPendingMessage({
+      id: `pending-${Date.now()}`,
+      role: "assistant",
+      content: language === "de" ? "Denke nach..." : "Thinking...",
+      createdAt: Date.now(),
+    });
 
     try {
       const reply = await draftAssistantReply(
@@ -74,10 +81,14 @@ function ChatPanel({
         content: reply,
         createdAt: Date.now(),
       };
-      setMessages((prev) => [...prev, assistantMessage]);
+      setMessages((prev) => [
+        ...prev.filter((m) => m.id !== pendingMessage?.id),
+        assistantMessage,
+      ]);
+      setPendingMessage(null);
     } catch (error) {
       setMessages((prev) => [
-        ...prev,
+        ...prev.filter((m) => m.id !== pendingMessage?.id),
         {
           id: createMessageId("error"),
           role: "assistant",
@@ -88,6 +99,7 @@ function ChatPanel({
           createdAt: Date.now(),
         },
       ]);
+      setPendingMessage(null);
     } finally {
       setIsLoading(false);
     }
@@ -97,31 +109,28 @@ function ChatPanel({
     language === "de"
       ? {
           chatWith: `Chat mit ${personaName}`,
-          grounded: "Basiert auf deinem Profil-Markdown",
           live: "Live",
         }
       : {
           chatWith: `Chat with ${personaName}`,
-          grounded: "Grounded in your profile markdown",
           live: "Live",
         };
 
   return (
     <section className="flex min-h-[70svh] flex-col overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900/90 via-slate-900 to-slate-950 shadow-[0_30px_80px_-24px_rgba(15,181,199,0.35)] backdrop-blur-lg">
-      <div className="flex items-center justify-between border-b border-white/5 px-6 py-5">
-        <div>
+      <div className="flex flex-col gap-3 border-b border-white/5 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-5">
+        <div className="space-y-1">
           <p className="text-[11px] uppercase tracking-[0.18em] text-teal-200">
             {labels.chatWith}
           </p>
-          <p className="text-sm text-slate-200/80">{labels.grounded}</p>
         </div>
-        <div className="flex items-center gap-2 rounded-full bg-white/5 px-3 py-1 text-xs font-semibold text-slate-100">
+        <div className="flex items-center gap-2 self-start rounded-full bg-white/5 px-3 py-1 text-xs font-semibold text-slate-100 sm:self-center">
           <span className="h-2 w-2 rounded-full bg-teal-300 shadow-[0_0_0_6px_rgba(45,212,191,0.12)]" />
           {labels.live}
         </div>
       </div>
 
-      <div className="flex flex-1 flex-col gap-6 p-6">
+      <div className="flex flex-1 flex-col gap-4 p-4 sm:gap-6 sm:p-6">
         <div className="flex-1 space-y-3 overflow-y-auto pr-1">
           {sortedMessages.map((message) => (
             <MessageBubble
@@ -130,6 +139,14 @@ function ChatPanel({
               language={language}
             />
           ))}
+          {pendingMessage && (
+            <MessageBubble
+              key={pendingMessage.id}
+              message={pendingMessage}
+              language={language}
+              isPending
+            />
+          )}
         </div>
 
         <ChatInput

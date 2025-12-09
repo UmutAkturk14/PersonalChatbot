@@ -4,6 +4,7 @@ import type { LanguageCode } from "../types/language";
 type MessageBubbleProps = {
   message: ChatMessage;
   language: LanguageCode;
+  isPending?: boolean;
 };
 
 function escapeHtml(value: string) {
@@ -15,11 +16,49 @@ function escapeHtml(value: string) {
     .replace(/'/g, "&#39;");
 }
 
-function renderInline(text: string) {
-  const escaped = escapeHtml(text);
-  return escaped
+function formatBasic(value: string) {
+  return value
     .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
     .replace(/__(.+?)__/g, "<u>$1</u>");
+}
+
+function sanitizeUrl(url: string) {
+  const trimmed = url.trim();
+  if (/^(https?:|mailto:|tel:)/i.test(trimmed)) return trimmed;
+  return null;
+}
+
+function renderInline(text: string) {
+  const linkPattern = /\[([^\]]+)\]\(([^)]+)\)/g;
+  let cursor = 0;
+  const parts: string[] = [];
+
+  for (const match of text.matchAll(linkPattern)) {
+    const [full, label, url] = match;
+    const start = match.index ?? 0;
+    if (start > cursor) {
+      const before = text.slice(cursor, start);
+      parts.push(formatBasic(escapeHtml(before)));
+    }
+    const safeUrl = sanitizeUrl(url);
+    if (safeUrl) {
+      const escapedLabel = escapeHtml(label);
+      const escapedHref = escapeHtml(safeUrl);
+      parts.push(
+        `<a href="${escapedHref}" target="_blank" rel="noopener noreferrer" class="text-teal-200 underline decoration-teal-300/70 underline-offset-2 hover:text-teal-100">${escapedLabel}</a>`
+      );
+    } else {
+      parts.push(formatBasic(escapeHtml(full)));
+    }
+    cursor = start + full.length;
+  }
+
+  if (cursor < text.length) {
+    const rest = text.slice(cursor);
+    parts.push(formatBasic(escapeHtml(rest)));
+  }
+
+  return parts.join("");
 }
 
 type Block =
@@ -44,33 +83,46 @@ function parseBlocks(text: string): Block[] {
     });
 }
 
-function MessageBubble({ message, language }: MessageBubbleProps) {
+function MessageBubble({ message, language, isPending = false }: MessageBubbleProps) {
   const isUser = message.role === "user";
   const blocks = parseBlocks(message.content);
   const labels = language === "de" ? { user: "Du", assistant: "Assistent" } : { user: "You", assistant: "Assistant" };
 
   return (
     <article
-      className={`max-w-3xl rounded-2xl px-5 py-4 shadow-lg transition ${
+      className={`w-full max-w-full rounded-2xl px-4 py-3 shadow-lg transition break-words sm:max-w-3xl sm:px-5 sm:py-4 ${
         isUser
           ? "ml-auto bg-gradient-to-r from-teal-400 to-emerald-400 text-slate-950 shadow-[0_10px_30px_-12px_rgba(45,212,191,0.65)]"
           : "bg-white/5 text-slate-50 ring-1 ring-white/10 backdrop-blur"
       }`}
     >
       <p
-        className={`text-xs font-semibold uppercase tracking-[0.08em] ${
+        className={`flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.08em] ${
           isUser ? "text-slate-900/80" : "text-teal-200"
         }`}
       >
         {isUser ? labels.user : labels.assistant}
+        {!isUser && isPending && (
+          <span className="flex h-2 w-6 items-center justify-between">
+            <span className="h-2 w-2 animate-bounce rounded-full bg-teal-200 [animation-delay:0ms]" />
+            <span className="h-2 w-2 animate-bounce rounded-full bg-teal-200 [animation-delay:120ms]" />
+            <span className="h-2 w-2 animate-bounce rounded-full bg-teal-200 [animation-delay:240ms]" />
+          </span>
+        )}
       </p>
       <div className="mt-2 space-y-3">
+        {!isUser && isPending && (
+          <p className="pending-text leading-relaxed text-slate-100/90">
+            {message.content}
+          </p>
+        )}
         {blocks.map((block, index) => {
+          if (!isUser && isPending) return null;
           if (block.type === "list") {
             return (
               <ul
                 key={`${message.id}-list-${index}`}
-                className={`list-disc space-y-1 pl-5 ${
+                className={`list-disc space-y-1 pl-5 whitespace-pre-wrap break-words ${
                   isUser ? "text-slate-950/80" : "text-slate-100/90"
                 }`}
                 dangerouslySetInnerHTML={{
@@ -87,7 +139,7 @@ function MessageBubble({ message, language }: MessageBubbleProps) {
               key={`${message.id}-p-${index}`}
               className={`leading-relaxed ${
                 isUser ? "text-slate-950/80" : "text-slate-100/90"
-              }`}
+              } whitespace-pre-wrap break-words`}
               dangerouslySetInnerHTML={{
                 __html: renderInline(block.content).replace(/\n/g, "<br />"),
               }}

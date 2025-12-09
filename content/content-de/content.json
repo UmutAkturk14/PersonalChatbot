@@ -1,22 +1,35 @@
 {
-  "greeting": "Hallo",
+  "greeting": "Hallo!",
   "name": "Umut Akturk",
-  "title": "Frontend Engineer & Produktentwickler",
-  "subtitle": "Ich konzipiere und liefere schnelle, zuverlässige Web-Erlebnisse mit React und TypeScript.",
-  "location": "Remote / EU-freundlich",
-  "availability": "Offen für neue Rollen",
+  "title": "Junior Developer",
+  "subtitle": "Ich entwickle benutzerorientierte, zuverlässige Webanwendungen mit modernen Frontend- und Backend-Technologien.",
+  "location": "Berlin, Deutschland (offen für Standorte in ganz Deutschland)",
+  "availability": "Sofort verfügbar",
   "highlights": [
     "React + TypeScript + Vite",
-    "Polierter UX mit integrierter Barrierefreiheit",
-    "Schnelle Lieferung mit durchdachter Iteration"
+    "Sauberes, responsives UI mit Fokus auf Barrierefreiheit",
+    "Grundkenntnisse in TypeScript, PostgreSQL, Docker und AWS",
+    "Schnelle Lernkurve und ausgeprägtes Produktverständnis"
   ],
   "badges": [
     "Frontend",
-    "Full-stack",
+    "Full-Stack",
     "Produktorientiert",
-    "Mentoring",
-    "KI",
-    "DevOps",
-    "Cloud"
-  ]
+    "Schnelle Iteration",
+    "Agile",
+    "API-Integration"
+  ],
+  "recruiter_notes": {
+    "target_roles": [
+      "Junior Developer",
+      "Frontend Developer",
+      "Full-Stack Developer",
+      "Praktikant",
+      "Ausbildung"
+    ],
+    "salary_range_eur": "Flexibel je nach Rolle und Erfahrungsniveau",
+    "location_preference": "Vor Ort, hybrid oder remote in ganz Deutschland",
+    "relocation": "Offen für Umzug innerhalb Deutschlands; kein Sponsoring innerhalb Deutschlands erforderlich",
+    "start_availability": "Sofort verfügbar"
+  }
 }

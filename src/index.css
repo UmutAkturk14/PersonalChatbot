@@ -79,3 +79,20 @@ code {
     opacity: 0.35;
   }
 }
+
+.pending-text {
+  animation: pendingTextPulse 1.2s ease-in-out infinite;
+  letter-spacing: 0.02em;
+}
+
+@keyframes pendingTextPulse {
+  0% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.45;
+  }
+}

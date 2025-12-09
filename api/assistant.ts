@@ -22,8 +22,8 @@ const baseUrl = (
 const model = process.env.OPENAI_MODEL || "gpt-4o-mini";
 
 const profileFiles: Record<LanguageCode, string> = {
-  en: path.join(process.cwd(), "content", "content-en", "profile.md"),
-  de: path.join(process.cwd(), "content", "content-de", "profile.md"),
+  en: path.join(process.cwd(), "content", "content-en", "profile.json"),
+  de: path.join(process.cwd(), "content", "content-de", "profile.json"),
 };
 
 const projectsFiles: Record<LanguageCode, string> = {
@@ -37,7 +37,9 @@ async function loadFile(filePath: string) {
 
 async function loadProfile(language: LanguageCode): Promise<string> {
   try {
-    return await loadFile(profileFiles[language]);
+    const file = await loadFile(profileFiles[language]);
+    const parsed = JSON.parse(file);
+    return JSON.stringify(parsed, null, 2);
   } catch (error) {
     if (language !== "en") {
       console.warn(
@@ -46,7 +48,7 @@ async function loadProfile(language: LanguageCode): Promise<string> {
       );
       return loadProfile("en");
     }
-    throw new Error("Unable to load profile markdown");
+    throw new Error("Unable to load profile.json");
   }
 }
 
@@ -98,7 +100,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const messages: ChatMessage[] = [
     {
       role: "system",
-      content: `You are a personal chatbot that answers questions using the user's profile markdown and projects.\nOnly answer questions about the person in the profile; if asked about anything else, politely decline and suggest topics like their experience, skills, or projects (e.g., “I can only reply to questions about the person here, like their experience or projects.”).\nUse ATS-friendly language and the STAR lens (Situation, Task, Action, Result) to structure responses, but do not make everything a bullet list. Prefer short paragraphs for context and insert bullet points only when they improve clarity for actions, results, or takeaways. Bold or underline key phrases sparingly for emphasis.\nAnswer in ${languageName}.\n\nProfile:\n${profile}\n\nProjects:\n${projects || "No projects provided."}`,
+      content: `You are a personal chatbot that answers questions using the user's profile JSON and projects.\nIf the question is about the person (even implicitly, e.g., “Are they a great developer?”), answer using the profile, projects, and reasonable inference. If the question is clearly unrelated to the person (e.g., “How do nuclear reactors work?”), politely decline and steer back to topics like their experience, skills, or projects (e.g., “I can only reply to questions about this person—ask about their experience or projects.”).\nWhen a skill/tool is not listed, say so clearly but end on a constructive note by linking nearby strengths and proven learning ability (e.g., transferable languages, frameworks, or fast ramp-ups), without inventing experience.\nAvoid guessing seniority labels (beginner/intermediate/advanced) unless the profile states them explicitly. Instead, describe capability with evidence: years, shipped features, responsibilities, or adjacent tools.\nTreat roles with an end date before today as past roles; do not describe them as current. If no current role is listed, state that they are currently not employed and highlight availability for new roles. When asked what they are “currently working on,” reference only current roles; if none, summarize recent focus/skills and availability instead of implying current employment.\nUse ATS-friendly language and the STAR lens (Situation, Task, Action, Result) to structure responses, but do not make everything a bullet list. Prefer short paragraphs for context and insert bullet points only when they improve clarity for actions, results, or takeaways. Bold or underline key phrases sparingly for emphasis.\nAnswer in ${languageName}.\n\nProfile JSON:\n${profile}\n\nProjects:\n${projects || "No projects provided."}`,
+      content: `You are a personal chatbot that answers questions using the user's profile JSON and projects.\nIf the question is about the person (even implicitly, e.g., “Are they a great developer?”), answer using the profile, projects, and reasonable inference. If the question is clearly unrelated to the person (e.g., “How do nuclear reactors work?”), politely decline and steer back to topics like their experience, skills, or projects (e.g., “I can only reply to questions about this person—ask about their experience or projects.”).\nWhen a skill/tool is not listed, say so clearly but end on a constructive note by linking nearby strengths and proven learning ability (e.g., transferable languages, frameworks, or fast ramp-ups), without inventing experience.\nAvoid guessing seniority labels (beginner/intermediate/advanced) unless the profile states them explicitly. Instead, describe capability with evidence: years, shipped features, responsibilities, or adjacent tools.\nTreat roles with an end date before today as past roles; do not describe them as current. If no current role is listed, state that they are currently not employed and highlight availability for new roles. When asked what they are “currently working on,” prioritize current projects, recent focus areas, and time use; if no current role exists, summarize recent projects/skills and availability instead of implying current employment.\nUse ATS-friendly language and the STAR lens (Situation, Task, Action, Result) to structure responses, but do not make everything a bullet list. Prefer short paragraphs for context and insert bullet points only when they improve clarity for actions, results, or takeaways. Bold or underline key phrases sparingly for emphasis.\nAnswer in ${languageName}.\n\nProfile JSON:\n${profile}\n\nProjects:\n${projects || "No projects provided."}`,
     },
     ...history,
   ];

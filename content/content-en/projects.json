@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Delphi",
+    "summary": "Short overview of what the project does and the problem it solves.",
+    "period": "YYYY–YYYY",
+    "status": "Complete",
+    "tech": ["React", "TypeScript", "AWS Lambda", "AWS DynamoDB"],
+    "team_size": 4,
+    "responsibilities": [
+      "What you owned (e.g., architecture, key features, integrations)",
+      "How you delivered (e.g., iterations, collaboration with design/product)"
+    ],
+    "outcomes": [
+      "Concrete results with metrics if possible (e.g., performance gains, conversion impact, reliability improvements)"
+    ],
+    "links": {
+      "live": "https://example.com",
+      "repo": "https://gitlab.com/Zookeeper14/Delphi",
+      "demo": "https://demo.example.com"
+    },
+    "context": {
+      "domain": "B2B SaaS",
+      "audience": "Internal users",
+      "notes": "Any constraints or notable challenges"
+    }
+  }
+]

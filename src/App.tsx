@@ -34,7 +34,8 @@ const fallbackContent: Record<LanguageCode, PageContent> = {
     greeting: "Hallo",
     name: "Alex Doe",
     title: "Frontend Engineer & Produktentwickler",
-    subtitle: "Ich baue schnelle, zuverlässige Web-Erlebnisse mit React und TypeScript.",
+    subtitle:
+      "Ich baue schnelle, zuverlässige Web-Erlebnisse mit React und TypeScript.",
     location: "Remote / EU-freundlich",
     availability: "Offen für neue Rollen",
     highlights: [
@@ -61,13 +62,19 @@ function getInitialLanguage(): LanguageCode {
 }
 
 function App() {
-  const [language, setLanguage] = useState<LanguageCode>(() => getInitialLanguage());
-  const [content, setContent] = useState<PageContent>(fallbackContent[language]);
+  const [language, setLanguage] = useState<LanguageCode>(() =>
+    getInitialLanguage()
+  );
+  const [content, setContent] = useState<PageContent>(
+    fallbackContent[language]
+  );
   const [isLoadingContent, setIsLoadingContent] = useState(true);
-  const [isLanguagePromptOpen, setIsLanguagePromptOpen] = useState<boolean>(() => {
-    if (typeof window === "undefined") return false;
-    return !isSupportedLanguage(localStorage.getItem("preferredLanguage"));
-  });
+  const [isLanguagePromptOpen, setIsLanguagePromptOpen] = useState<boolean>(
+    () => {
+      if (typeof window === "undefined") return false;
+      return !isSupportedLanguage(localStorage.getItem("preferredLanguage"));
+    }
+  );
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [showLoader, setShowLoader] = useState(true);
   const [renderLoader, setRenderLoader] = useState(true);
@@ -178,11 +185,14 @@ function App() {
             overlayQuestion: "English or Deutsch?",
             overlayRemember: "We'll remember your choice for next time.",
           },
-    [language],
+    [language]
   );
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-50" lang={language}>
+    <main
+      className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-50"
+      lang={language}
+    >
       {renderLoader && (
         <div
           className={`loading-overlay fixed inset-0 z-50 flex flex-col items-center justify-center gap-6 bg-slate-950 transition-opacity ${
@@ -199,16 +209,24 @@ function App() {
             <span />
           </div>
           <div className="loading-text text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-200">Loading</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-200">
+              Loading
+            </p>
           </div>
         </div>
       )}
       {isLanguagePromptOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 px-6 backdrop-blur">
           <div className="w-full max-w-md rounded-3xl border border-white/10 bg-slate-900/90 p-6 text-center shadow-2xl shadow-teal-500/20">
-            <p className="text-sm uppercase tracking-[0.2em] text-teal-200">{strings.overlayTitle}</p>
-            <h2 className="mt-2 text-2xl font-semibold text-white">{strings.overlayQuestion}</h2>
-            <p className="mt-3 text-sm text-slate-300">{strings.overlayRemember}</p>
+            <p className="text-sm uppercase tracking-[0.2em] text-teal-200">
+              {strings.overlayTitle}
+            </p>
+            <h2 className="mt-2 text-2xl font-semibold text-white">
+              {strings.overlayQuestion}
+            </h2>
+            <p className="mt-3 text-sm text-slate-300">
+              {strings.overlayRemember}
+            </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
               <button
                 type="button"
@@ -234,13 +252,17 @@ function App() {
         <div className="absolute bottom-0 right-0 h-80 w-96 rounded-full bg-indigo-500/15 blur-[140px]" />
       </div>
 
-      <div className="relative mx-auto flex max-w-6xl flex-col gap-10 px-6 py-12 lg:px-8">
-        <div className="fixed right-6 top-6 z-30">
+      <div className="relative mx-auto flex max-w-6xl flex-col gap-8 px-4 py-10 sm:px-6 lg:gap-10 lg:px-8">
+        <div className="fixed right-4 top-4 z-30 sm:right-6 sm:top-6">
           <label className="flex items-center gap-2 rounded-full border border-white/10 bg-slate-900/80 px-3 py-2 text-xs font-semibold text-slate-100 shadow-lg shadow-teal-500/10 backdrop-blur">
-            <span className="hidden text-slate-300 sm:inline">{strings.languageLabel}</span>
+            <span className="hidden text-slate-300 sm:inline">
+              {strings.languageLabel}
+            </span>
             <select
               value={language}
-              onChange={(event) => handleLanguageSelect(event.target.value as LanguageCode)}
+              onChange={(event) =>
+                handleLanguageSelect(event.target.value as LanguageCode)
+              }
               className="rounded-full border border-white/10 bg-slate-800 px-2 py-1 text-xs font-semibold text-white outline-none"
             >
               <option value="en">English</option>
@@ -249,17 +271,25 @@ function App() {
           </label>
         </div>
 
-        <header className="flex gap-6 lg:grid-cols-[1.4fr_1fr] lg:items-start">
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-2xl shadow-teal-500/15 backdrop-blur">
-            <p className="text-xs uppercase tracking-[0.24em] text-teal-200">{content.greeting}</p>
-            <h1 className="mt-2 text-4xl font-semibold leading-tight sm:text-5xl">{content.name}</h1>
-            <p className="mt-3 text-lg font-semibold text-teal-100">{content.title}</p>
-            <p className="mt-3 text-base leading-relaxed text-slate-200/90">{content.subtitle}</p>
+        <header className="grid gap-6 lg:grid-cols-[1.4fr_1fr] lg:items-start">
+          <div className="rounded-3xl border border-white/10 bg-white/5 p-5 shadow-2xl shadow-teal-500/15 backdrop-blur sm:p-6">
+            <p className="text-[11px] uppercase tracking-[0.24em] text-teal-200">
+              {content.greeting}
+            </p>
+            <h1 className="mt-2 text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl">
+              {content.name}
+            </h1>
+            <p className="mt-3 text-base font-semibold text-teal-100 sm:text-lg">
+              {content.title}
+            </p>
+            <p className="mt-3 text-sm leading-relaxed text-slate-200/90 sm:text-base">
+              {content.subtitle}
+            </p>
             <div className="mt-5 flex flex-wrap gap-2">
               {content.badges.map((badge) => (
                 <span
                   key={badge}
-                  className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-slate-100"
+                  className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-100 sm:text-xs"
                 >
                   {badge}
                 </span>
@@ -267,19 +297,23 @@ function App() {
             </div>
           </div>
 
-          <aside className="flex flex-col gap-4 rounded-3xl border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent p-6 shadow-xl shadow-indigo-500/10 backdrop-blur">
+          <aside className="flex flex-col gap-4 rounded-3xl border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent p-5 shadow-xl shadow-indigo-500/10 backdrop-blur sm:p-6">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-semibold text-teal-100">{strings.snapshot}</span>
+              <span className="text-sm font-semibold text-teal-100">
+                {strings.snapshot}
+              </span>
               <span className="rounded-full bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-100">
                 {isLoadingContent ? strings.loading : strings.live}
               </span>
             </div>
             <ul className="space-y-2 text-sm text-slate-100/90">
               <li>
-                <span className="text-slate-400">{strings.location}:</span> {content.location}
+                <span className="text-slate-400">{strings.location}:</span>{" "}
+                {content.location}
               </li>
               <li>
-                <span className="text-slate-400">{strings.availability}:</span> {content.availability}
+                <span className="text-slate-400">{strings.availability}:</span>{" "}
+                {content.availability}
               </li>
             </ul>
             <div className="rounded-2xl border border-white/10 bg-slate-900/60 p-4">
@@ -295,13 +329,6 @@ function App() {
                 ))}
               </ul>
             </div>
-            <p className="text-xs text-slate-400">
-              {strings.grounded}{" "}
-              <code className="rounded bg-slate-900 px-2 py-1 text-[11px] text-teal-200">
-                {`content/content-${language}/profile.md`}
-              </code>
-              .
-            </p>
           </aside>
         </header>
 
