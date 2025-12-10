@@ -79,6 +79,7 @@ function App() {
   const [showLoader, setShowLoader] = useState(true);
   const [renderLoader, setRenderLoader] = useState(true);
   const loaderStartRef = useRef<number | null>(null);
+  const hasCompletedInitialLoad = useRef(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -124,7 +125,12 @@ function App() {
 
   useEffect(() => {
     // Show loader immediately on load start; keep it visible for a minimum to avoid flicker.
+    if (hasCompletedInitialLoad.current && !showLoader) {
+      return;
+    }
+
     if (isLoadingContent) {
+      if (hasCompletedInitialLoad.current) return;
       loaderStartRef.current = performance.now();
       setShowLoader(true);
       setRenderLoader(true);
@@ -137,9 +143,12 @@ function App() {
       : minDurationMs;
     const remaining = Math.max(0, minDurationMs - elapsed);
 
-    const timer = window.setTimeout(() => setShowLoader(false), remaining);
+    const timer = window.setTimeout(() => {
+      setShowLoader(false);
+      hasCompletedInitialLoad.current = true;
+    }, remaining);
     return () => window.clearTimeout(timer);
-  }, [isLoadingContent, prefersReducedMotion, loaderStartRef]);
+  }, [isLoadingContent, prefersReducedMotion, loaderStartRef, showLoader]);
 
   useEffect(() => {
     if (showLoader) {
