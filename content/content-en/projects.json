@@ -1,27 +1,241 @@
 [
   {
     "name": "Delphi",
-    "summary": "Short overview of what the project does and the problem it solves.",
-    "period": "YYYY–YYYY",
-    "status": "Complete",
-    "tech": ["React", "TypeScript", "AWS Lambda", "AWS DynamoDB"],
-    "team_size": 4,
-    "responsibilities": [
-      "What you owned (e.g., architecture, key features, integrations)",
-      "How you delivered (e.g., iterations, collaboration with design/product)"
+    "summary": "A cinematic React + TypeScript application that blends multiple divination modes—AI-guided chat, tarot, numerology, horoscope wheel, dreams, runes, and more—into a cohesive, animated digital oracle experience. Built as a cloud-native product with a scalable AWS backend.",
+    "period": "2025 September – Present",
+    "status": "In Progress",
+    "tech": [
+      "React",
+      "TypeScript",
+      "Vite",
+      "Tailwind v4",
+      "Framer Motion",
+      "AWS Lambda",
+      "AWS DynamoDB",
+      "AWS AppSync",
+      "AWS S3",
+      "AWS Cognito (planned)",
+      "GraphQL",
+      "OpenAI"
+    ],
+    "role": "Solo developer",
+    "contributions": [
+      "Designed the full cloud architecture using AWS serverless services and GraphQL-first principles",
+      "Implemented multi-mode divination experiences with animated UI surfaces and React Router 7",
+      "Set up local cloud simulation using LocalStack for DynamoDB, AppSync, and S3 development",
+      "Built reading history, saved profiles, and planned Cognito-based authentication flows"
     ],
     "outcomes": [
-      "Concrete results with metrics if possible (e.g., performance gains, conversion impact, reliability improvements)"
+      "Achieved smooth 60 FPS UI animations across multi-page flows with Framer Motion",
+      "Reduced backend boilerplate by adopting a unified GraphQL AppSync schema",
+      "Enabled scalable user-personalized readings via DynamoDB + Lambda pipelines"
     ],
     "links": {
-      "live": "https://example.com",
-      "repo": "https://gitlab.com/Zookeeper14/Delphi",
-      "demo": "https://demo.example.com"
+      "repo": "https://gitlab.com/Zookeeper14/Delphi"
     },
     "context": {
-      "domain": "B2B SaaS",
-      "audience": "Internal users",
-      "notes": "Any constraints or notable challenges"
+      "domain": "Consumer-facing product",
+      "audience": "End users seeking personalized AI experiences",
+      "constraints": [
+        "Cloud cost optimization",
+        "Solo development of a large multi-system product",
+        "Balancing animation-heavy UI with performance targets"
+      ]
+    }
+  },
+
+  {
+    "name": "Web Crawler",
+    "summary": "A full-stack web application that processes and analyzes submitted URLs, generating structured data such as HTML version, headings, links, and login form detection. Includes real-time crawl progress, a dashboard, and Playwright end-to-end tests.",
+    "period": "2025",
+    "status": "Complete",
+    "tech": [
+      "Go (Gin)",
+      "React",
+      "TypeScript",
+      "MySQL",
+      "Docker",
+      "Tailwind",
+      "Vite",
+      "JWT",
+      "Playwright"
+    ],
+    "role": "Solo developer",
+    "contributions": [
+      "Developed the backend crawler in Go using Gin, implementing status polling and real-time progress updates",
+      "Built the full React dashboard with bulk actions, visual data panels, and responsive design",
+      "Containerized the entire system using Docker Compose and configured local dev orchestration",
+      "Created comprehensive Playwright tests for crawling workflows and UI validation"
+    ],
+    "outcomes": [
+      "Delivered structured crawl results with accurate login-form detection and link classification",
+      "Implemented a stable crawling pipeline capable of handling multiple parallel requests",
+      "Improved dashboard responsiveness using optimized React state slices and memoization"
+    ],
+    "links": {
+      "repo": "https://github.com/UmutAkturk14/web-crawler"
+    },
+    "context": {
+      "domain": "Developer tooling / Web analysis",
+      "audience": "Technical users needing structured website insights",
+      "constraints": [
+        "Maintaining performance under multiple concurrent crawls",
+        "Handling websites with inconsistent HTML structure",
+        "Coordinating backend crawling and frontend polling"
+      ]
+    }
+  },
+
+  {
+    "name": "German Reading Exercises",
+    "summary": "A full-stack EdTech application that generates AI-backed reading passages, comprehension checks, and progress tracking. Users authenticate, study daily content, look up vocabulary, and build long-term reading habits.",
+    "period": "2025",
+    "status": "Complete",
+    "tech": [
+      "React",
+      "TypeScript",
+      "Tailwind",
+      "Vite",
+      "Express",
+      "GraphQL Yoga",
+      "Prisma",
+      "SQLite",
+      "OpenAI"
+    ],
+    "role": "Solo developer",
+    "contributions": [
+      "Architected the GraphQL API using Yoga and Prisma for clean schema-driven development",
+      "Implemented spaced repetition logic for reading difficulty and progress tracking",
+      "Designed a clean, mobile-first interface for reading, quizzes, and vocabulary lookups",
+      "Integrated OpenAI to generate context-aware reading passages and summaries"
+    ],
+    "outcomes": [
+      "Reduced query complexity by normalizing reading-level metadata in Prisma models",
+      "Delivered consistently formatted AI passages using custom prompt engineering",
+      "Built a responsive and accessible UI that supports long reading sessions"
+    ],
+    "links": {
+      "repo": "https://github.com/UmutAkturk14/GermanReadingExercises/"
+    },
+    "context": {
+      "domain": "EdTech / Language learning",
+      "audience": "German learners at A1–B2 levels",
+      "constraints": [
+        "Optimizing AI generation for consistent difficulty",
+        "Ensuring fast UX on a lightweight SQLite backend"
+      ]
+    }
+  },
+
+  {
+    "name": "German Practice",
+    "summary": "A full-stack language learning platform with flashcards, multiple-choice quizzes, JWT authentication, AI-powered content generation, and progress tracking. Runs on serverless GraphQL functions with a PostgreSQL database.",
+    "period": "2025",
+    "status": "Complete",
+    "tech": [
+      "React",
+      "TypeScript",
+      "Vite",
+      "OpenAI",
+      "GraphQL Yoga",
+      "Vercel Serverless Functions",
+      "PostgreSQL",
+      "Prisma",
+      "JWT"
+    ],
+    "role": "Solo developer",
+    "contributions": [
+      "Built serverless GraphQL endpoints using Vercel functions for scalable low-latency requests",
+      "Modeled progress data with PostgreSQL + Prisma for long-term study tracking",
+      "Implemented JWT authentication for secure user sessions across devices",
+      "Created AI-powered flashcard and quiz generators tailored to user difficulty"
+    ],
+    "outcomes": [
+      "Improved serverless cold-start times by bundling functions efficiently",
+      "Enabled personalized study sessions based on historical correctness data",
+      "Delivered a smooth, interactive UI optimized for quick-paced reviewing"
+    ],
+    "links": {
+      "repo": "https://github.com/UmutAkturk14/GermanPractice"
+    },
+    "context": {
+      "domain": "EdTech / Language learning",
+      "audience": "Students practicing vocabulary and grammar",
+      "constraints": [
+        "Ensuring consistent AI output for quiz formats",
+        "Balancing serverless execution limits with GraphQL workloads"
+      ]
+    }
+  },
+
+  {
+    "name": "Pathfinder",
+    "summary": "An interactive visualization tool that generates mazes and computes the shortest path using the A* algorithm. Built with React, Canvas, and TypeScript for smooth real-time rendering.",
+    "period": "2025",
+    "status": "Complete",
+    "tech": ["React", "TypeScript", "Tailwind", "Canvas API", "Vite"],
+    "role": "Solo developer",
+    "contributions": [
+      "Implemented recursive backtracking maze generation with configurable density",
+      "Built a clean React UI layered over a Canvas-based rendering pipeline",
+      "Rendered the step-by-step A* pathfinding process with smooth animations",
+      "Managed interaction logic for placing start/end nodes and regenerating mazes"
+    ],
+    "outcomes": [
+      "Achieved high frame rates even on large 40×40 grids with optimized redraw logic",
+      "Created a clear visual demonstration of pathfinding fundamentals",
+      "Improved algorithmic understanding through visual debugging tools"
+    ],
+    "links": {
+      "repo": "https://github.com/UmutAkturk14/Pathfinder",
+      "live": "https://umutakturk14.github.io/Pathfinder/"
+    },
+    "context": {
+      "domain": "Algorithms / Visualization",
+      "audience": "Learners and developers exploring pathfinding",
+      "constraints": [
+        "Efficient rendering of multiple canvases",
+        "Avoiding unnecessary re-renders during animation frames"
+      ]
+    }
+  },
+
+  {
+    "name": "Personal Chatbot",
+    "summary": "A single-page React app that answers questions about you using your custom JSON profile. Runs on a Vercel serverless API that uses OpenAI to generate context-aware responses.",
+    "period": "2025",
+    "status": "Complete",
+    "tech": [
+      "React",
+      "TypeScript",
+      "Vite",
+      "Vercel Serverless Functions",
+      "OpenAI",
+      "Markdown Rendering"
+    ],
+    "role": "Solo developer",
+    "contributions": [
+      "Built a serverless API that injects personal structured data into OpenAI prompts",
+      "Designed the chat interface using React 19 with smooth, accessible interactions",
+      "Added speech recognition and markdown output for a polished experience",
+      "Created the data model used to ground responses with consistent personal details"
+    ],
+    "outcomes": [
+      "Provides recruiters an interactive, always-online summary of your background",
+      "Ensures answer accuracy by grounding responses in structured JSON",
+      "Delivers a fast, frictionless UX on a single-page interface"
+    ],
+    "links": {
+      "live": "https://umutakturk.dev",
+      "repo": "https://github.com/UmutAkturk14/PersonalChatbot"
+    },
+    "context": {
+      "domain": "Portfolio / AI tooling",
+      "audience": "Recruiters, hiring managers, collaborators",
+      "constraints": [
+        "Ensuring AI responses stay truthful and grounded",
+        "Handling ambiguous recruiter questions gracefully"
+      ]
     }
   }
 ]

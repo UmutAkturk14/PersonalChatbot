@@ -19,55 +19,47 @@ const apiKey = process.env.OPENAI_API_KEY;
 const baseUrl = (
   process.env.OPENAI_BASE_URL || "https://api.openai.com/v1"
 ).replace(/\/$/, "");
-const model = process.env.OPENAI_MODEL || "gpt-4o-mini";
+const model = process.env.OPENAI_MODEL || "gpt-5.1";
 
-const profileFiles: Record<LanguageCode, string> = {
-  en: path.join(process.cwd(), "content", "content-en", "profile.json"),
-  de: path.join(process.cwd(), "content", "content-de", "profile.json"),
-};
+const profileFile = path.join(
+  process.cwd(),
+  "content",
+  "content-en",
+  "profile.json"
+);
 
-const projectsFiles: Record<LanguageCode, string> = {
-  en: path.join(process.cwd(), "content", "content-en", "projects.md"),
-  de: path.join(process.cwd(), "content", "content-de", "projects.md"),
-};
+const projectsFile = path.join(
+  process.cwd(),
+  "content",
+  "content-en",
+  "projects.json"
+);
 
 async function loadFile(filePath: string) {
   return readFile(filePath, "utf8");
 }
 
-async function loadProfile(language: LanguageCode): Promise<string> {
+async function loadProfile(): Promise<string> {
   try {
-    const file = await loadFile(profileFiles[language]);
+    const file = await loadFile(profileFile);
     const parsed = JSON.parse(file);
     return JSON.stringify(parsed, null, 2);
-  } catch (error) {
-    if (language !== "en") {
-      console.warn(
-        "Profile fetch failed for language, falling back to en.",
-        error
-      );
-      return loadProfile("en");
-    }
+  } catch {
     throw new Error("Unable to load profile.json");
   }
 }
 
-async function loadProjects(language: LanguageCode): Promise<string> {
+async function loadProjects(): Promise<string> {
   try {
-    return await loadFile(projectsFiles[language]);
+    const file = await loadFile(projectsFile);
+    const parsed = JSON.parse(file);
+    return JSON.stringify(parsed, null, 2);
   } catch (error) {
-    if (language !== "en") {
-      console.warn(
-        "Projects fetch failed for language, falling back to en.",
-        error
-      );
-      return loadProjects("en");
-    }
     console.warn(
-      "Unable to load projects.md; continuing without projects context.",
+      "Unable to load projects.json; continuing without projects context.",
       error
     );
-    return "";
+    return "[]";
   }
 }
 
@@ -93,15 +85,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return;
   }
 
-  const profile = await loadProfile(language);
-  const projects = await loadProjects(language);
+  const profile = await loadProfile();
+  const projects = await loadProjects();
   const languageName = language === "de" ? "German" : "English";
 
   const messages: ChatMessage[] = [
     {
       role: "system",
-      content: `You are a personal chatbot that answers questions using the user's profile JSON and projects.\nIf the question is about the person (even implicitly, e.g., “Are they a great developer?”), answer using the profile, projects, and reasonable inference. If the question is clearly unrelated to the person (e.g., “How do nuclear reactors work?”), politely decline and steer back to topics like their experience, skills, or projects (e.g., “I can only reply to questions about this person—ask about their experience or projects.”).\nWhen a skill/tool is not listed, say so clearly but end on a constructive note by linking nearby strengths and proven learning ability (e.g., transferable languages, frameworks, or fast ramp-ups), without inventing experience.\nAvoid guessing seniority labels (beginner/intermediate/advanced) unless the profile states them explicitly. Instead, describe capability with evidence: years, shipped features, responsibilities, or adjacent tools.\nTreat roles with an end date before today as past roles; do not describe them as current. If no current role is listed, state that they are currently not employed and highlight availability for new roles. When asked what they are “currently working on,” reference only current roles; if none, summarize recent focus/skills and availability instead of implying current employment.\nUse ATS-friendly language and the STAR lens (Situation, Task, Action, Result) to structure responses, but do not make everything a bullet list. Prefer short paragraphs for context and insert bullet points only when they improve clarity for actions, results, or takeaways. Bold or underline key phrases sparingly for emphasis.\nAnswer in ${languageName}.\n\nProfile JSON:\n${profile}\n\nProjects:\n${projects || "No projects provided."}`,
-      content: `You are a personal chatbot that answers questions using the user's profile JSON and projects.\nIf the question is about the person (even implicitly, e.g., “Are they a great developer?”), answer using the profile, projects, and reasonable inference. If the question is clearly unrelated to the person (e.g., “How do nuclear reactors work?”), politely decline and steer back to topics like their experience, skills, or projects (e.g., “I can only reply to questions about this person—ask about their experience or projects.”).\nWhen a skill/tool is not listed, say so clearly but end on a constructive note by linking nearby strengths and proven learning ability (e.g., transferable languages, frameworks, or fast ramp-ups), without inventing experience.\nAvoid guessing seniority labels (beginner/intermediate/advanced) unless the profile states them explicitly. Instead, describe capability with evidence: years, shipped features, responsibilities, or adjacent tools.\nTreat roles with an end date before today as past roles; do not describe them as current. If no current role is listed, state that they are currently not employed and highlight availability for new roles. When asked what they are “currently working on,” prioritize current projects, recent focus areas, and time use; if no current role exists, summarize recent projects/skills and availability instead of implying current employment.\nUse ATS-friendly language and the STAR lens (Situation, Task, Action, Result) to structure responses, but do not make everything a bullet list. Prefer short paragraphs for context and insert bullet points only when they improve clarity for actions, results, or takeaways. Bold or underline key phrases sparingly for emphasis.\nAnswer in ${languageName}.\n\nProfile JSON:\n${profile}\n\nProjects:\n${projects || "No projects provided."}`,
+      content: `You are a personal chatbot that answers questions using the user's profile JSON and projects.\nIf the question is about the person (even implicitly, e.g., “Are they a great developer?”), answer using the profile, projects, and reasonable inference. If the question is clearly unrelated to the person (e.g., “How do nuclear reactors work?”), politely decline and steer back to topics like their experience, skills, or projects (e.g., “I can only reply to questions about this person—ask about their experience or projects.”).\nWhen a skill/tool is not listed, say so clearly but end on a constructive note by linking nearby strengths and proven learning ability (e.g., transferable languages, frameworks, or fast ramp-ups), without inventing experience.\nAvoid guessing seniority labels (beginner/intermediate/advanced) unless the profile states them explicitly. Instead, describe capability with evidence: years, shipped features, responsibilities, or adjacent tools.\nTreat roles with an end date before today as past roles; do not describe them as current. If no current role is listed, state that they are currently not employed and highlight availability for new roles. When asked what they are “currently working on,” prioritize current projects, recent focus areas, and time use; if no current role exists, summarize recent projects/skills and availability instead of implying current employment.\nWhen mentioning a project, include the provided repo/live links with descriptive anchor text that includes the project name; never use generic anchors like “here” or “this link.”\nUse ATS-friendly language and the STAR lens (Situation, Task, Action, Result) to structure responses, but do not make everything a bullet list. Prefer short paragraphs for context and insert bullet points only when they improve clarity for actions, results, or takeaways. Bold or underline key phrases sparingly for emphasis.\nAnswer in ${languageName}.\n\nProfile JSON:\n${profile}\n\nProjects:\n${projects || "No projects provided."}`,
     },
     ...history,
   ];
@@ -158,10 +149,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     readable.on("end", () => res.end());
     readable.on("error", (error) => {
       console.error("Stream error:", error);
-      if (!res.headersSent) {
-        res.status(500).json({ error: "Stream error" });
-      } else {
+      if (res.headersSent) {
         res.end();
+      } else {
+        res.status(500).json({ error: "Stream error" });
       }
     });
     return;

@@ -1,35 +1,43 @@
 {
   "greeting": "Hallo!",
   "name": "Umut Akturk",
-  "title": "Junior Developer",
-  "subtitle": "Ich entwickle benutzerorientierte, zuverlässige Webanwendungen mit modernen Frontend- und Backend-Technologien.",
-  "location": "Berlin, Deutschland (offen für Standorte in ganz Deutschland)",
+  "title": "Junior Entwickler (Web / Full-Stack)",
+  "subtitle": "Ich entwickle zuverlässige, nutzerzentrierte Webanwendungen mit modernen Frontend-, Backend- und Cloud-Technologien.",
+  "location": "Berlin, Deutschland (bundesweit offen)",
   "availability": "Sofort verfügbar",
+
   "highlights": [
-    "React + TypeScript + Vite",
-    "Sauberes, responsives UI mit Fokus auf Barrierefreiheit",
-    "Grundkenntnisse in TypeScript, PostgreSQL, Docker und AWS",
-    "Schnelle Lernkurve und ausgeprägtes Produktverständnis"
+    "React, TypeScript, Vite – klare, zugängliche und responsive Benutzeroberflächen",
+    "Full-Stack Erfahrung mit GraphQL, PostgreSQL, Prisma und serverlosen Backends",
+    "Go, Docker und Cloud-Grundlagen mit AWS Lambda, DynamoDB und AppSync",
+    "Praxisnahe Projekte: Dashboards, Authentifizierung, KI-gestützte Funktionen",
+    "Sehr schnelle Lernkurve, starke Problemlösung und klare Dokumentation"
   ],
+
   "badges": [
-    "Frontend",
     "Full-Stack",
+    "Frontend",
+    "Go",
+    "AWS-Erfahrung",
     "Produktorientiert",
     "Schnelle Iteration",
-    "Agile",
-    "API-Integration"
+    "Agil",
+    "API-Integration",
+    "KI-Features"
   ],
+
   "recruiter_notes": {
     "target_roles": [
       "Junior Developer",
-      "Frontend Developer",
       "Full-Stack Developer",
-      "Praktikant",
+      "Frontend Developer",
+      "Backend Developer (Go/Node)",
+      "Praktikum",
       "Ausbildung"
     ],
-    "salary_range_eur": "Flexibel je nach Rolle und Erfahrungsniveau",
-    "location_preference": "Vor Ort, hybrid oder remote in ganz Deutschland",
-    "relocation": "Offen für Umzug innerhalb Deutschlands; kein Sponsoring innerhalb Deutschlands erforderlich",
+    "salary_range_eur": "Flexibel je nach Rolle und Erfahrungsstufe",
+    "location_preference": "Vor Ort, hybrid oder remote innerhalb Deutschlands",
+    "relocation": "Umzugsbereit innerhalb Deutschlands; keine Sponsorship erforderlich",
     "start_availability": "Sofort verfügbar"
   }
 }

@@ -1,35 +1,43 @@
 {
   "greeting": "Hey there",
   "name": "Umut Akturk",
-  "title": "Junior Developer",
-  "subtitle": "I design and build reliable, user-focused web applications with modern frontend and backend tooling.",
-  "location": "Berlin, Germany (open accross Germany)",
+  "title": "Junior Developer (Web / Full Stack)",
+  "subtitle": "I build reliable, user-focused web applications using modern frontend, backend, and cloud technologies.",
+  "location": "Berlin, Germany (open across Germany)",
   "availability": "Available immediately",
+
   "highlights": [
-    "React + TypeScript + Vite",
-    "Clean, responsive UI with accessibility in mind",
-    "TypeScript, PostgreSQL, Docker, and AWS foundations",
-    "Fast learning curve with strong product intuition"
+    "React, TypeScript, Vite — clean, accessible, responsive UIs",
+    "Full-stack experience with GraphQL, PostgreSQL, Prisma, and serverless",
+    "Go, Docker, and cloud fundamentals with AWS Lambda, DynamoDB, and AppSync",
+    "Real product experience: dashboards, AI-assisted features, authentication",
+    "Fast learner with strong reasoning, documentation, and problem-solving skills"
   ],
+
   "badges": [
-    "Frontend",
     "Full-stack",
+    "Frontend",
+    "Go",
+    "AWS-aware",
     "Product-minded",
     "Rapid Iteration",
     "Agile",
-    "API Integration"
+    "API Integration",
+    "AI Features"
   ],
+
   "recruiter_notes": {
     "target_roles": [
       "Junior Developer",
+      "Full-Stack Developer",
       "Frontend Developer",
-      "Full-stack Developer",
+      "Backend Developer (Go/Node)",
       "Intern",
       "Ausbildung"
     ],
     "salary_range_eur": "Flexible depending on role and level",
-    "location_preference": "On-site, hybrid, or remote across Germany",
-    "relocation": "Open to relocation anywhere in Germany; no sponsorship required within Germany",
+    "location_preference": "Open to on-site, hybrid, or remote roles across Germany",
+    "relocation": "Open to relocation within Germany; no sponsorship required",
     "start_availability": "Available immediately"
   }
 }

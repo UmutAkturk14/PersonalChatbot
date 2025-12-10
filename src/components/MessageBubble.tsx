@@ -87,6 +87,25 @@ function MessageBubble({ message, language, isPending = false }: MessageBubblePr
   const isUser = message.role === "user";
   const blocks = parseBlocks(message.content);
   const labels = language === "de" ? { user: "Du", assistant: "Assistent" } : { user: "You", assistant: "Assistant" };
+  const linkButtons =
+    !isUser && !isPending && message.links
+      ? message.links
+          .map((link) => {
+            const safeUrl = sanitizeUrl(link.url);
+            if (!safeUrl) return null;
+            return { url: safeUrl, label: link.label };
+          })
+          .filter((link): link is { url: string; label?: string } => Boolean(link))
+      : [];
+
+  const formatLinkLabel = (url: string) => {
+    try {
+      const { hostname } = new URL(url);
+      return hostname.replace(/^www\./, "");
+    } catch {
+      return url;
+    }
+  };
 
   return (
     <article
@@ -147,6 +166,21 @@ function MessageBubble({ message, language, isPending = false }: MessageBubblePr
           );
         })}
       </div>
+      {linkButtons && linkButtons.length > 0 && (
+        <div className="mt-3 flex flex-wrap gap-2">
+          {linkButtons.map(({ url, label }) => (
+            <a
+              key={`${message.id}-${url}`}
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-teal-200 to-emerald-200 px-3 py-2 text-sm font-semibold text-slate-900 shadow-[0_12px_30px_-14px_rgba(45,212,191,0.55)] transition hover:-translate-y-[1px] hover:shadow-[0_14px_34px_-12px_rgba(45,212,191,0.6)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+            >
+              {label?.trim() || formatLinkLabel(url)}
+            </a>
+          ))}
+        </div>
+      )}
     </article>
   );
 }

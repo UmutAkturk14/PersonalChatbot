@@ -5,7 +5,7 @@ A single-page React 19 + Vite app that answers questions about you. The chat is 
 ## Features
 
 - AI answers via `api/assistant.ts` (OpenAI, GPT-4o-mini by default) with graceful fallback if the call fails.
-- Data-driven persona: hero content from `content/content-*/content.json`, structured profile from `profile.json`, and project blurbs from `projects.md` (English + German, with fallback).
+- Data-driven persona: hero content from `content/content-*/content.json`, structured profile from `profile.json`, and project blurbs from `projects.json` (English + German, with fallback).
 - Persistent language switcher (en/de) and loader for first paint to avoid layout flicker.
 - Safe rich-text rendering for bullets/links and a simple typing indicator in the chat UI.
 - Text input out of the box; if you want speech recognition, wire the browser SpeechRecognition API into `src/components/ChatInput.tsx` and submit the recognized text through the existing handler.
@@ -17,7 +17,7 @@ A single-page React 19 + Vite app that answers questions about you. The chat is 
 - `src/components/*` — chat UI pieces (panel, input, message bubble).
 - `src/lib/assistant.ts` — frontend helper that posts chat history to `/api/assistant`.
 - `api/assistant.ts` — Vercel serverless function that injects your profile/projects into the OpenAI chat request.
-- `content/content-en` and `content/content-de` — persona data (`content.json`, `profile.json`, `projects.md`).
+- `content/content-en` and `content/content-de` — persona data (`content.json`, `profile.json`, `projects.json`).
 - `.env.example` — environment variables copied to `.env.local`.
 
 ## Getting started
@@ -32,7 +32,7 @@ A single-page React 19 + Vite app that answers questions about you. The chat is 
 
 - Update `content/content-en/content.json` (and `content/content-de/content.json`) for the hero/name/title/badges shown above the chat.
 - Replace `content/content-en/profile.json` with your own structured resume/profile data; add a German version in `content/content-de/profile.json` or the app will fall back to English.
-- Edit `content/content-en/projects.md` (and `content/content-de/projects.md`) with Markdown lists/paragraphs describing projects; missing files fall back to English.
+- Edit `content/content-en/projects.json` (and `content/content-de/projects.json`) with structured project entries; missing files fall back to English.
 - Supported languages are defined in `src/types/language.ts`; to add more, extend that file and the `contentUrls` map in `src/App.tsx` and mirror the content folder structure.
 
 ## Using the chat

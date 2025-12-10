@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { createMessageId, draftAssistantReply } from "../lib/assistant";
-import type { ChatMessage } from "../types/chat";
+import type { ChatMessage, LinkPreview } from "../types/chat";
 import type { LanguageCode } from "../types/language";
 import ChatInput from "./ChatInput";
 import MessageBubble from "./MessageBubble";
@@ -12,12 +12,61 @@ type ChatPanelProps = {
   language: LanguageCode;
 };
 
+function extractLinks(text: string, linkLabelMap?: Map<string, string>): LinkPreview[] {
+  const markdownPattern = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/gi;
+  const urlPattern = /\bhttps?:\/\/[^\s)<>\]]+/gi;
+  const seen = new Set<string>();
+  const links: LinkPreview[] = [];
+
+  const isGenericLabel = (label: string) => {
+    const normalized = label.trim().toLowerCase();
+    return ["here", "link", "this", "repo", "live", "website", "demo", "view"].includes(normalized);
+  };
+
+  const sanitize = (raw: string) => {
+    const trimmed = raw.replace(/[),.]+$/, "");
+    try {
+      const url = new URL(trimmed);
+      if (url.protocol !== "http:" && url.protocol !== "https:") return null;
+      return url.toString();
+    } catch {
+      return null;
+    }
+  };
+
+  for (const match of text.matchAll(markdownPattern)) {
+    const [, label, rawUrl] = match;
+    const url = sanitize(rawUrl);
+    if (!url || seen.has(url)) continue;
+    seen.add(url);
+    const mappedLabel = linkLabelMap?.get(url);
+    links.push({
+      url,
+      label: mappedLabel || (isGenericLabel(label) ? undefined : label.trim()),
+    });
+  }
+
+  for (const match of text.matchAll(urlPattern)) {
+    const url = sanitize(match[0]);
+    if (!url || seen.has(url)) continue;
+    seen.add(url);
+    links.push({ url, label: linkLabelMap?.get(url) });
+  }
+
+  return links;
+}
+
 function ChatPanel({
   personaName,
   personaTitle,
   personaSubtitle,
   language,
 }: ChatPanelProps) {
+  const projectsUrl = useMemo(
+    () => new URL("../content/content-en/projects.json", import.meta.url).href,
+    []
+  );
+  const [linkLabelMap, setLinkLabelMap] = useState<Map<string, string>>(new Map());
   const intro = useMemo(
     () =>
       language === "de"
@@ -44,6 +93,34 @@ function ChatPanel({
       },
     ]);
   }, [intro, language]);
+
+  useEffect(() => {
+    let isMounted = true;
+    const loadProjects = async () => {
+      try {
+        const res = await fetch(projectsUrl);
+        if (!res.ok) throw new Error(`Failed to load projects.json: ${res.status}`);
+        const data: Array<{ name?: string; links?: Record<string, string> }> =
+          await res.json();
+        if (!isMounted) return;
+        const map = new Map<string, string>();
+        for (const project of data) {
+          if (!project?.name || !project.links) continue;
+          for (const [key, url] of Object.entries(project.links)) {
+            if (!url) continue;
+            map.set(url, `${project.name} — ${key === "live" ? "Live" : key}`);
+          }
+        }
+        setLinkLabelMap(map);
+      } catch (error) {
+        console.warn("Unable to load projects link labels.", error);
+      }
+    };
+    void loadProjects();
+    return () => {
+      isMounted = false;
+    };
+  }, [projectsUrl]);
 
   const sortedMessages = useMemo(
     () => [...messages].sort((a, b) => a.createdAt - b.createdAt),
@@ -80,6 +157,7 @@ function ChatPanel({
         role: "assistant",
         content: reply,
         createdAt: Date.now(),
+        links: extractLinks(reply, linkLabelMap),
       };
       setMessages((prev) => [
         ...prev.filter((m) => m.id !== pendingMessage?.id),

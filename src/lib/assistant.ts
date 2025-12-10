@@ -2,7 +2,7 @@ import type { ChatMessage } from "../types/chat";
 import type { LanguageCode } from "../types/language";
 
 const placeholderReply =
-  "I'm ready to answer questions about you. Add your profile to content/profile.md and wire up OpenAI chat completions to replace this placeholder.";
+  "I'm ready to answer questions about you. Add your details to content/profile.json and content/projects.json, then wire up OpenAI chat completions to replace this placeholder.";
 
 async function draftAssistantReply(
   history: ChatMessage[],
